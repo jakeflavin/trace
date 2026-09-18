@@ -23,7 +23,7 @@ export type LayoutId =
   | 'lined'
 
 /** How a letter to be traced is drawn. */
-export type Stroke = 'dotted' | 'hollow' | 'grey' | 'faint'
+export type Stroke = 'dotted' | 'dashed' | 'grey' | 'hollow'
 
 export type SizeId = 'small' | 'medium' | 'large'
 
@@ -48,8 +48,6 @@ export interface Sheet {
   title: string
   /** "Name" and "Date" blanks in the corner. */
   nameLine: boolean
-  /** A dot at the start of every traced word, where the pencil goes down. */
-  startDots: boolean
 }
 
 export interface Layout {
@@ -138,7 +136,7 @@ export function isLayoutId(value: unknown): value is LayoutId {
   return LAYOUTS.some((layout) => layout.id === value)
 }
 
-export const STROKES: readonly Stroke[] = ['dotted', 'hollow', 'grey', 'faint']
+export const STROKES: readonly Stroke[] = ['dotted', 'dashed', 'grey', 'hollow']
 export const SIZES: readonly SizeId[] = ['small', 'medium', 'large']
 export const CASES: readonly LetterCase[] = ['typed', 'lower', 'upper', 'title']
 export const GUIDE_COLORS: readonly GuideColor[] = ['classic', 'grey', 'black']
@@ -163,7 +161,6 @@ export const DEFAULT_SHEET: Sheet = {
   descender: false,
   title: '',
   nameLine: true,
-  startDots: true,
 }
 
 /** One entry per line; a single line of commas is a list too, because that is how one is pasted. */
@@ -250,6 +247,5 @@ export function sanitizeSheet(value: unknown): Sheet {
     descender: typeof raw.descender === 'boolean' ? raw.descender : DEFAULT_SHEET.descender,
     title: typeof raw.title === 'string' ? raw.title.slice(0, LIMITS.title) : '',
     nameLine: typeof raw.nameLine === 'boolean' ? raw.nameLine : DEFAULT_SHEET.nameLine,
-    startDots: typeof raw.startDots === 'boolean' ? raw.startDots : DEFAULT_SHEET.startDots,
   }
 }

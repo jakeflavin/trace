@@ -1,20 +1,23 @@
 import { FONTS } from '@/lib/fonts'
+import type { GlyphSource } from '@/lib/glyphs'
 import type { Ruler } from '@/lib/metrics'
 import { LIMITS, type Sheet, findLayout, setLayout, setOption, setWords } from '@/lib/sheet'
 import { Field, HandCard, HandGrid, Hint, Panel, Section, Toggles } from './Editor.styled'
 import { LayoutPicker } from './LayoutPicker'
 import { Segmented } from './Segmented'
+import { StylePicker } from './StylePicker'
 import { Toggle } from './Toggle'
 import { WordsField } from './WordsField'
 
 export interface EditorProps {
   sheet: Sheet
   ruler: Ruler | null
+  glyphs: GlyphSource | null
   onChange: (sheet: Sheet) => void
   onImported: (added: number) => void
 }
 
-export function Editor({ sheet, ruler, onChange, onImported }: EditorProps) {
+export function Editor({ sheet, ruler, glyphs, onChange, onImported }: EditorProps) {
   const set = <K extends keyof Sheet>(key: K, value: Sheet[K]) =>
     onChange(setOption(sheet, key, value))
   const layout = findLayout(sheet.layout)
@@ -35,6 +38,7 @@ export function Editor({ sheet, ruler, onChange, onImported }: EditorProps) {
         <LayoutPicker
           sheet={sheet}
           ruler={ruler}
+          glyphs={glyphs}
           onChange={(id) => onChange(setLayout(sheet, id))}
         />
         <Hint>
@@ -67,15 +71,10 @@ export function Editor({ sheet, ruler, onChange, onImported }: EditorProps) {
 
       <Section>
         <h2>Letters</h2>
-        <Segmented
-          label="Letter style"
-          value={sheet.stroke}
-          options={[
-            { value: 'dotted', label: 'Dotted' },
-            { value: 'hollow', label: 'Hollow' },
-            { value: 'grey', label: 'Grey' },
-            { value: 'faint', label: 'Faint' },
-          ]}
+        <StylePicker
+          sheet={sheet}
+          ruler={ruler}
+          glyphs={glyphs}
           onChange={(stroke) => set('stroke', stroke)}
         />
         <Segmented
@@ -125,12 +124,6 @@ export function Editor({ sheet, ruler, onChange, onImported }: EditorProps) {
             note="Where g, p and y reach down to"
             checked={sheet.descender}
             onChange={(on) => set('descender', on)}
-          />
-          <Toggle
-            label="Starting dots"
-            note="A green dot where the pencil goes down"
-            checked={sheet.startDots}
-            onChange={(on) => set('startDots', on)}
           />
         </Toggles>
       </Section>

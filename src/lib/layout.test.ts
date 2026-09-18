@@ -75,7 +75,9 @@ describe('the rows', () => {
     expect(styleAt(rows[0]!)).toBe('ink')
     expect(styleAt(rows[1]!)).toBe('grey')
     expect(styleAt(rows[2]!)).toBe('dotted')
-    expect(styleAt(rows[3]!)).toBe('faint')
+    // The fourth row is blank, so the next row with a word on it starts the cycle again.
+    expect(styleAt(rows[3]!)).toBe('ink')
+    expect(rows[3]! - rows[2]!).toBeGreaterThan((rows[2]! - rows[1]!) * 1.5)
   })
 
   it('leaves the right half empty for trace-then-write', () => {
@@ -134,12 +136,6 @@ describe('the rows', () => {
           expect(box.x + box.w, layout.id).toBeLessThanOrEqual(page.width + 1)
       }
     }
-  })
-
-  it('puts a start dot on traced words only', () => {
-    const [page] = layoutSheet({ sheet: sheet({ layout: 'list', words: ['Ada'] }) })
-    expect(page!.runs.find((r) => r.style === 'ink' && r.size > 20)?.dot).toBeNull()
-    expect(traced(page!)[0]?.dot).not.toBeNull()
   })
 
   it('cases the word before it reaches the page', () => {

@@ -25,8 +25,12 @@ lands exactly on the top line and a small one on the dashed midline.
 per-word layout makes a sheet for every name; the list, cards and sentence layouts put them
 together. Print sends every page at once.
 
-**Letter, or A4.** Dotted, hollow, grey or faint letters. Three sizes. Blue-and-red, grey or
-black lines, a dashed midline, a line for the tails, a green dot where the pencil starts, a
+**Letters a child can follow.** Traced letters are dots or dashes along the spine of
+each stroke, found by thinning the font's own glyphs in the browser, so they read like a
+tracing font in every hand rather than a dashed outline.
+
+**Letter, or A4.** Dotted, dashed, grey or hollow letters. Three sizes. Blue-and-red, grey or
+black lines, a dashed midline, a line for the tails, a
 heading, and Name and Date blanks in the corner.
 
 It stores the sheet in the browser and nowhere else. No account, no server.

@@ -34,6 +34,31 @@ export const Strip = styled.div`
   }
 `
 
+/* One page and its caption. Pages past the preview's limit still print. */
+export const Sheet = styled.div<{ $screenOnly: boolean }>`
+  flex: none;
+  display: ${({ $screenOnly }) => ($screenOnly ? 'none' : 'flex')};
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  scroll-snap-align: center;
+
+  @media print {
+    display: block;
+  }
+`
+
+export const Caption = styled.p`
+  color: var(--dim);
+  font-size: var(--font-tiny);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+
+  @media print {
+    display: none;
+  }
+`
+
 /*
  * A page at printed size, shrunk to fit. The wrapper takes the scaled footprint so the
  * layout around it is honest about the space; the page inside is untouched, which is
@@ -43,13 +68,10 @@ export const Scaled = styled.div<{
   $scale: number
   $width: number
   $height: number
-  $screenOnly: boolean
 }>`
   flex: none;
-  display: ${({ $screenOnly }) => ($screenOnly ? 'none' : 'block')};
   width: ${({ $scale, $width }) => Math.round($width * $scale)}px;
   height: ${({ $scale, $height }) => Math.round($height * $scale)}px;
-  scroll-snap-align: center;
   border-radius: 4px;
   box-shadow: var(--shadow);
   overflow: hidden;
@@ -64,7 +86,6 @@ export const Scaled = styled.div<{
   }
 
   @media print {
-    display: block;
     width: auto;
     height: auto;
     border-radius: 0;

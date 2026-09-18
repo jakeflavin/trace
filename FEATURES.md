@@ -48,7 +48,7 @@ will not fit. A letter off the page teaches nothing.
 | ----------------- | -------- | --------------------------------------------------------- |
 | Trace the word    | per word | the word repeated across every line                       |
 | Trace, then write | per word | copies fill the left half, the right half is empty        |
-| Fade away         | per word | solid model, grey, dotted, faint, blank, round again      |
+| Fade away         | per word | solid model, grey, dotted, blank, round again             |
 | Letter by letter  | per word | a line for each letter, then lines of the word            |
 | Letter boxes      | per word | a box a letter: a solid row, two traced, the rest empty   |
 | Big and small     | per word | CAPITALS on one line, lower case on the next              |
@@ -61,6 +61,10 @@ will not fit. A letter off the page teaches nothing.
 A sheet with no words at all is lined paper. Rainbow writing is always hollow whatever
 letter style is chosen, because that is what rainbow writing is.
 
+There is no dot for where the pencil starts. A dot that is not on the right stroke of the
+right letter teaches the wrong thing, and putting it on the right one means knowing the
+stroke order of every letter in three hands, which the app does not.
+
 ## Hands
 
 Three fonts in `lib/fonts.ts`, all open and served from the app: Andika for print, with
@@ -71,22 +75,31 @@ the point. Each declares its bold, so a cursive heading is not smeared by a synt
 
 ## Letters
 
-Four ways to draw a letter to be traced: dotted (a dashed outline), hollow (a solid
-outline), grey (a light fill) and faint (a paler fill). Outline weight scales with the
-letter and is clamped so a tiny word is still crisp and a huge one is not a cartoon. A
-solid black `ink` letter is the model and is never a thing to trace. Case can be as typed,
-Title, lower or UPPER, and is applied before the words reach the page.
+**A letter to be traced is dots along the spine of each stroke**, the way a tracing
+font draws them, so a child follows one line rather than the two edges of an outline.
+A font only knows its outlines, so each glyph is drawn to a canvas in the sheet's hand,
+thinned to a one-pixel skeleton (Zhang–Suen, in `lib/skeleton.ts`), walked into
+polylines, pruned of the stubs thinning grows at corners, simplified and smoothed. The
+result is kept per font and letter in em units (`lib/glyphs.ts`), so every size is a
+scale of the same spine. The regular weight is thinned rather than the bold: the thinner
+the ink, the fewer stubs where strokes meet, and the spine is the same either way.
+Without a canvas (jsdom) the page falls back to a dashed outline.
 
-**A green dot** marks where the pencil goes down: just left of each traced word, at half
-the x-height. It can be turned off.
+Four ways to draw a letter to be traced: dotted and dashed spines, a grey fill to write
+over, and a hollow outline. The spine's weight scales with the letter and is clamped so
+a tiny word is still crisp and a huge one is not a cartoon. A solid black `ink` letter is
+the model and is never a thing to trace. Case can be as typed, Title, lower or UPPER, and
+is applied before the words reach the page.
+
+The picker shows each style as it will print, in the chosen hand, on the chosen lines.
 
 ## Pages
 
 Letter or A4, both portrait, laid out at 96 pixels to the inch with a half-inch margin.
 `@page` follows the choice and sets zero margin; the page has its own. In print every
 page is `100vw` by `100vh`, so the layout fills the real paper, and colours are forced
-with `print-color-adjust`. The preview shows the first 24 pages and says how many more
-will print; every page prints.
+with `print-color-adjust`. The preview shows the first 24 pages, each with its number, and
+says how many more will print; every page prints.
 
 The page is an SVG. Its colours (`lib/palette.ts`) are its own custom properties, written
 onto each page, so it is white with the same lines in the preview, in the picker

@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { findFont } from '@/lib/fonts'
+import { glyphSource } from '@/lib/glyphs'
 import { layoutSheet } from '@/lib/layout'
 import { paperSize } from '@/lib/paper'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
@@ -26,6 +28,8 @@ export function App() {
   const [note, setNote] = useState<string | null>(null)
 
   const pages = layoutSheet({ sheet, metrics: ruler?.metrics, measure: ruler?.measure })
+  // Spines are found by drawing the font, so they wait for it to load like the ruler does.
+  const glyphs = ruler ? glyphSource(findFont(sheet.font)) : null
 
   return (
     <Shell>
@@ -41,12 +45,13 @@ export function App() {
 
       <Main>
         <Stage>
-          <Preview sheet={sheet} pages={pages} fitHeight={narrow} />
+          <Preview sheet={sheet} pages={pages} glyphs={glyphs} fitHeight={narrow} />
         </Stage>
         <Form>
           <Editor
             sheet={sheet}
             ruler={ruler}
+            glyphs={glyphs}
             onChange={setSheet}
             onImported={(added) =>
               setNote(

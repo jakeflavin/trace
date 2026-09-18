@@ -252,6 +252,53 @@ export const Thumb = styled.div`
   background: #ffffff;
 `
 
+/* ----------------------------------------------------------- style pick */
+
+export const StyleGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+
+  @media (max-width: 400px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+`
+
+export const StyleCard = styled.button`
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 6px 6px 8px;
+  border: 2px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  text-align: left;
+
+  &:hover {
+    border-color: var(--dim);
+  }
+
+  &[aria-checked='true'] {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    border: 1px solid var(--line);
+  }
+
+  b {
+    font-size: var(--font-tiny);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+`
+
 /* ------------------------------------------------------------ hand pick */
 
 export const HandGrid = styled.div`

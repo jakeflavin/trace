@@ -63,4 +63,9 @@ describe('sanitizeSheet', () => {
     expect(out.font).toBe('print')
     expect(out.size).toBe('small')
   })
+
+  it('replaces a letter style an older build wrote', () => {
+    expect(sanitizeSheet({ stroke: 'faint' }).stroke).toBe('dotted')
+    expect(sanitizeSheet({ stroke: 'dashed' }).stroke).toBe('dashed')
+  })
 })

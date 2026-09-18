@@ -1,14 +1,18 @@
 import type { CSSProperties } from 'react'
 import { findFont } from '@/lib/fonts'
-import { type Line, type Page, type Run, TITLE_SIZE } from '@/lib/layout'
+import type { GlyphSource } from '@/lib/glyphs'
+import { type Line, type Page, TITLE_SIZE } from '@/lib/layout'
 import { palette } from '@/lib/palette'
 import { MARGIN } from '@/lib/paper'
 import type { Sheet } from '@/lib/sheet'
 import { Paper } from './SheetPage.styled'
+import { Word } from './Word'
 
 export interface SheetPageProps {
   page: Page
   sheet: Sheet
+  /** Where traced letters get their spines; null draws outlines instead. */
+  glyphs: GlyphSource | null
   /** Which page this is, for the label; pages are otherwise identical regions. */
   index: number
   /** A thumbnail is a picture of a page, not a page: no label, no fixed size. */
@@ -23,29 +27,6 @@ const LINE_STROKE: Record<Line['kind'], { width: number; dash?: string; token: s
   blank: { width: 1.2, token: 'frame' },
 }
 
-/** How each kind of run is painted. Outlines scale with the letters; a fill does not care. */
-function paint(run: Run): CSSProperties {
-  const outline = Math.min(2.4, Math.max(1.1, run.size * 0.02))
-  switch (run.style) {
-    case 'ink':
-      return { fill: 'var(--ink)' }
-    case 'grey':
-      return { fill: 'var(--fill)' }
-    case 'faint':
-      return { fill: 'var(--faint)' }
-    case 'hollow':
-      return { fill: 'none', stroke: 'var(--trace)', strokeWidth: outline * 1.3 }
-    case 'dotted':
-      return {
-        fill: 'none',
-        stroke: 'var(--trace)',
-        strokeWidth: outline,
-        strokeLinecap: 'round',
-        strokeDasharray: `${(run.size * 0.045).toFixed(1)} ${(run.size * 0.05).toFixed(1)}`,
-      }
-  }
-}
-
 /**
  * One printed page, as an SVG at its paper size.
  *
@@ -53,7 +34,7 @@ function paint(run: Run): CSSProperties {
  * its own custom properties, set here from the palette, so the same markup is right in
  * the preview, in the thumbnails and on paper whatever the editor's theme is.
  */
-export function SheetPage({ page, sheet, index, thumbnail = false }: SheetPageProps) {
+export function SheetPage({ page, sheet, glyphs, index, thumbnail = false }: SheetPageProps) {
   const font = findFont(sheet.font)
   const colors = palette(sheet.guides)
   const vars = Object.fromEntries(
@@ -81,7 +62,7 @@ export function SheetPage({ page, sheet, index, thumbnail = false }: SheetPagePr
         {page.title && (
           <text
             x={MARGIN}
-            y={MARGIN + 30}
+            y={MARGIN + 32}
             fontFamily={font.family}
             fontWeight={font.bold}
             fontSize={TITLE_SIZE}
@@ -124,20 +105,7 @@ export function SheetPage({ page, sheet, index, thumbnail = false }: SheetPagePr
         })}
 
         {page.runs.map((run, i) => (
-          <g key={i}>
-            {run.dot && <circle cx={run.dot.x} cy={run.dot.y} r={run.dot.r} fill="var(--start)" />}
-            <text
-              x={run.x}
-              y={run.y}
-              fontFamily={font.family}
-              fontWeight={run.size < 20 ? font.bold : font.weight}
-              fontSize={run.size}
-              letterSpacing={run.spacing || undefined}
-              style={{ whiteSpace: 'pre', ...paint(run) }}
-            >
-              {run.text}
-            </text>
-          </g>
+          <Word key={i} run={run} font={font} glyphs={glyphs} />
         ))}
 
         {!thumbnail && (

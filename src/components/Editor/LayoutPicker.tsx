@@ -1,3 +1,4 @@
+import type { GlyphSource } from '@/lib/glyphs'
 import { layoutSheet } from '@/lib/layout'
 import type { Ruler } from '@/lib/metrics'
 import { LAYOUTS, type LayoutId, type Sheet } from '@/lib/sheet'
@@ -7,11 +8,12 @@ import { LayoutCard, LayoutGrid, Thumb } from './Editor.styled'
 export interface LayoutPickerProps {
   sheet: Sheet
   ruler: Ruler | null
+  glyphs: GlyphSource | null
   onChange: (layout: LayoutId) => void
 }
 
 /** The eleven layouts, each shown as the first page it would make of these very words. */
-export function LayoutPicker({ sheet, ruler, onChange }: LayoutPickerProps) {
+export function LayoutPicker({ sheet, ruler, glyphs, onChange }: LayoutPickerProps) {
   // Two words are enough to tell a list from a name sheet; a hundred would be a hundred pages.
   const sample = { ...sheet, words: sheet.words.slice(0, 3), nameLine: false }
 
@@ -33,7 +35,9 @@ export function LayoutPicker({ sheet, ruler, onChange }: LayoutPickerProps) {
             title={layout.note}
             onClick={() => onChange(layout.id)}
           >
-            <Thumb>{page && <SheetPage page={page} sheet={sample} index={0} thumbnail />}</Thumb>
+            <Thumb>
+              {page && <SheetPage page={page} sheet={sample} glyphs={glyphs} index={0} thumbnail />}
+            </Thumb>
             <b>{layout.label}</b>
           </LayoutCard>
         )

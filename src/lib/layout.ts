@@ -39,8 +39,6 @@ export interface Run {
   size: number
   style: RunStyle
   spacing: number
-  /** Where the pencil goes down: a dot to the left of the first letter, at mid height. */
-  dot: { x: number; y: number; r: number } | null
 }
 
 export interface Box {
@@ -65,7 +63,7 @@ export interface Page {
 const CAP: Record<SizeId, number> = { small: 34, medium: 50, large: 70 }
 
 const HEADER = 60
-const TITLE_SIZE = 26
+const TITLE_SIZE = 30
 const LABEL_SIZE = 14
 
 interface Row {
@@ -157,7 +155,7 @@ class Doc {
     const word = (text: string) => {
       const w = label(text)
       x -= w + 6
-      this.page.runs.push({ x, y, text, size: LABEL_SIZE, style: 'ink', spacing: 0, dot: null })
+      this.page.runs.push({ x, y, text, size: LABEL_SIZE, style: 'ink', spacing: 0 })
       x -= 8
     }
     blank(110)
@@ -221,12 +219,8 @@ class Doc {
   }
 
   run(text: string, row: Row, x: number, style: RunStyle): number {
-    const { sheet, font } = this.ctx
+    const { font } = this.ctx
     const w = this.width_(text, row)
-    const dot =
-      sheet.startDots && style !== 'ink'
-        ? { x: x - row.cap * 0.1, y: row.y - row.xh / 2, r: Math.max(2, row.cap * 0.045) }
-        : null
     this.page.runs.push({
       x,
       y: row.y,
@@ -234,7 +228,6 @@ class Doc {
       size: row.size,
       style,
       spacing: font.tracking * row.cap,
-      dot,
     })
     return w
   }
@@ -290,8 +283,8 @@ const traceWrite: PerWord = (doc, word, cap, stroke) => {
   doc.fillPage(cap, (row, x1, x2) => doc.repeat(word, row, x1, x1 + (x2 - x1) / 2, stroke))
 }
 
-/** A model, then each step lighter, then the child alone. Five rows, round again. */
-const FADE: readonly (RunStyle | null)[] = ['ink', 'grey', 'dotted', 'faint', null]
+/** A model, then grey to write over, then dots to follow, then the child alone. */
+const FADE: readonly (RunStyle | null)[] = ['ink', 'grey', 'dotted', null]
 
 const fade: PerWord = (doc, word, cap) => {
   doc.fillPage(cap, (row, x1, x2, index) => {

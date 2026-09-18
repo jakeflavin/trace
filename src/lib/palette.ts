@@ -13,14 +13,10 @@ export interface Palette {
   trace: string
   /** A filled letter to write over. */
   fill: string
-  /** The palest step of a fade. */
-  faint: string
   top: string
   mid: string
   base: string
   desc: string
-  /** The dot where the pencil goes down. */
-  start: string
   /** Boxes and the cut lines between cards. */
   frame: string
 }
@@ -28,10 +24,8 @@ export interface Palette {
 const BASE = {
   paper: '#ffffff',
   ink: '#1c1c1e',
-  trace: '#8e8e93',
-  fill: '#c9c9cc',
-  faint: '#e4e4e7',
-  start: '#2e9e5b',
+  trace: '#8a8a90',
+  fill: '#cfcfd3',
   frame: '#b8b8bd',
 }
 
