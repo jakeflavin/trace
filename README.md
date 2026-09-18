@@ -11,8 +11,8 @@ A parent or a teacher types a word, usually a name, picks a layout, and prints. 
 gets a sheet of dotted letters on handwriting lines to write over. The app keeps nothing
 and asks for nothing.
 
-**Eleven layouts.** The word over and over; trace then write; a fade from a solid model to
-nothing; one line per letter; letter boxes; capitals and lower case; huge hollow letters for
+**Twelve layouts.** The word over and over; trace then write; a fade from a solid model to
+nothing; look, trace, write; one line per letter; letter boxes; capitals and lower case; huge hollow letters for
 rainbow writing; a word list; sentences with a blank line under each; flash cards to cut
 out; and plain lined paper with a model at the top. Each layout in the picker is drawn from
 the words in the box, so the thumbnails are the actual pages.

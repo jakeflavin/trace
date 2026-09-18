@@ -13,6 +13,7 @@ export type LayoutId =
   | 'repeat'
   | 'traceWrite'
   | 'fade'
+  | 'lookTraceWrite'
   | 'list'
   | 'letters'
   | 'boxes'
@@ -76,6 +77,12 @@ export const LAYOUTS: readonly [Layout, ...Layout[]] = [
     id: 'fade',
     label: 'Fade away',
     note: 'Solid, then grey, then dotted, then nothing.',
+    perWord: true,
+  },
+  {
+    id: 'lookTraceWrite',
+    label: 'Look, trace, write',
+    note: 'A big model, a grey row, a dotted row, then lines of your own.',
     perWord: true,
   },
   {

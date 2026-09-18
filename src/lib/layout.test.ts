@@ -86,6 +86,20 @@ describe('the rows', () => {
     for (const run of traced(page!)) expect(run.x).toBeLessThan(half)
   })
 
+  it('looks, traces, then writes: a big model, a grey row, a dotted row, then blanks', () => {
+    const [page] = layoutSheet({ sheet: sheet({ layout: 'lookTraceWrite', words: ['sun'] }) })
+    const big = page!.runs.filter((r) => r.size > 20)
+    const rows = [...new Set(big.map((r) => r.y))].sort((a, b) => a - b)
+    const at = (y: number) => big.filter((r) => r.y === y)
+    expect(at(rows[0]!)).toHaveLength(1)
+    expect(at(rows[0]!)[0]!.style).toBe('ink')
+    expect(at(rows[0]!)[0]!.size).toBeGreaterThan(at(rows[1]!)[0]!.size)
+    expect(at(rows[1]!)[0]!.style).toBe('grey')
+    expect(at(rows[2]!)[0]!.style).toBe('dotted')
+    expect(rows).toHaveLength(3)
+    expect(page!.lines.filter((l) => l.kind === 'base').length).toBeGreaterThan(3)
+  })
+
   it('spells the word out letter by letter first', () => {
     const [page] = layoutSheet({ sheet: sheet({ layout: 'letters', words: ['cat'] }) })
     const rows = [...new Set(traced(page!).map((r) => r.y))].sort((a, b) => a - b)

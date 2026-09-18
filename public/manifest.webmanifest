@@ -1,7 +1,7 @@
 {
   "name": "Trace",
   "short_name": "Trace",
-  "description": "Type a word, print a worksheet, and a child traces it. A name, a spelling list or a sentence, in eleven layouts.",
+  "description": "Type a word, print a worksheet, and a child traces it. A name, a spelling list or a sentence, in twelve layouts.",
   "start_url": ".",
   "scope": ".",
   "display": "standalone",

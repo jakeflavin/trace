@@ -293,6 +293,18 @@ const fade: PerWord = (doc, word, cap) => {
   })
 }
 
+/** The word big, once, to look at; then a row to write over, a row to follow, and room. */
+const lookTraceWrite: PerWord = (doc, word, cap, stroke) => {
+  const big = doc.fit(word, doc.width, cap * 1.8)
+  doc.line(big, (row, x1, x2) => {
+    const w = doc.width_(word, row)
+    doc.run(word, row, x1 + (x2 - x1 - w) / 2, 'ink')
+  })
+  doc.line(cap, (row, x1, x2) => doc.repeat(word, row, x1, x2, 'grey'))
+  doc.line(cap, (row, x1, x2) => doc.repeat(word, row, x1, x2, stroke))
+  doc.fillPage(cap, () => {})
+}
+
 const letters: PerWord = (doc, word, cap, stroke) => {
   for (const letter of [...word].filter((ch) => ch.trim())) {
     doc.line(cap, (row, x1, x2) => doc.repeat(letter, row, x1, x2, stroke))
@@ -434,6 +446,7 @@ const PER_WORD: Record<string, PerWord> = {
   repeat,
   traceWrite,
   fade,
+  lookTraceWrite,
   letters,
   boxes,
   cases,

@@ -15,7 +15,7 @@ lines are not, because a sentence has commas in it. A text or CSV file appends t
 Blanks and repeats are dropped, the list stops at a hundred and a word at sixty
 characters, and the box keeps its own text so a blank line being typed does not vanish.
 
-**A layout is per-word or shared.** Seven give every word its own page, which is how one
+**A layout is per-word or shared.** Eight give every word its own page, which is how one
 document is both "my child's name" and "twenty-five names for the class". Four put the
 words on the same pages: the list, sentences, cards and lined paper. The picker says which.
 
@@ -42,21 +42,22 @@ sentence wraps instead, and one word of it that still will not fit shrinks that 
 a flash card a sentence wraps onto up to three lines and only shrinks when even that
 will not fit. A letter off the page teaches nothing.
 
-## The eleven layouts
+## The twelve layouts
 
-| Layout            | Pages    | Rows                                                      |
-| ----------------- | -------- | --------------------------------------------------------- |
-| Trace the word    | per word | the word repeated across every line                       |
-| Trace, then write | per word | copies fill the left half, the right half is empty        |
-| Fade away         | per word | solid model, grey, dotted, blank, round again             |
-| Letter by letter  | per word | a line for each letter, then lines of the word            |
-| Letter boxes      | per word | a box a letter: a solid row, two traced, the rest empty   |
-| Big and small     | per word | CAPITALS on one line, lower case on the next              |
-| Rainbow writing   | per word | huge hollow letters, up to 2.3× the size, fitted to width |
-| Word list         | shared   | a solid model at the left, traced copies after it         |
-| Sentences         | shared   | a traced line, then a blank one; the pair never splits    |
-| Flash cards       | shared   | eight a page, cut lines dashed; a short list cycles       |
-| Lined paper       | shared   | the first word solid at the top, then empty lines         |
+| Layout             | Pages    | Rows                                                      |
+| ------------------ | -------- | --------------------------------------------------------- |
+| Trace the word     | per word | the word repeated across every line                       |
+| Trace, then write  | per word | copies fill the left half, the right half is empty        |
+| Fade away          | per word | solid model, grey, dotted, blank, round again             |
+| Look, trace, write | per word | the word big and solid, a grey row, a dotted row, blanks  |
+| Letter by letter   | per word | a line for each letter, then lines of the word            |
+| Letter boxes       | per word | a box a letter: a solid row, two traced, the rest empty   |
+| Big and small      | per word | CAPITALS on one line, lower case on the next              |
+| Rainbow writing    | per word | huge hollow letters, up to 2.3× the size, fitted to width |
+| Word list          | shared   | a solid model at the left, traced copies after it         |
+| Sentences          | shared   | a traced line, then a blank one; the pair never splits    |
+| Flash cards        | shared   | eight a page, cut lines dashed; a short list cycles       |
+| Lined paper        | shared   | the first word solid at the top, then empty lines         |
 
 A sheet with no words at all is lined paper. Rainbow writing is always hollow whatever
 letter style is chosen, because that is what rainbow writing is.

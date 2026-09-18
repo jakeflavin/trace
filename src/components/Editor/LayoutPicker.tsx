@@ -12,7 +12,7 @@ export interface LayoutPickerProps {
   onChange: (layout: LayoutId) => void
 }
 
-/** The eleven layouts, each shown as the first page it would make of these very words. */
+/** The layouts, each shown as the first page it would make of these very words. */
 export function LayoutPicker({ sheet, ruler, glyphs, onChange }: LayoutPickerProps) {
   // Two words are enough to tell a list from a name sheet; a hundred would be a hundred pages.
   const sample = { ...sheet, words: sheet.words.slice(0, 3), nameLine: false }
