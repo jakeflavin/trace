@@ -1,0 +1,166 @@
+/*
+ * Trace — the editor's ground.
+ *
+ * Two things live in the app: the editor, a plain tool in the set's neutral light/dark
+ * pair, and the worksheet, which is white paper whatever the editor looks like. Only the
+ * editor's tokens are here. The page's come from `lib/palette.ts` and are written onto
+ * each page as custom properties, so it carries its own colours to the printer.
+ *
+ * Only the ground and the reset live in this file, because only those have to be right
+ * on the first paint, before any JavaScript runs. Everything else is a component's own
+ * business and lives in its .styled module.
+ */
+
+:root {
+  --font-sans:
+    ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
+    Helvetica, Arial, sans-serif;
+
+  --font-body: 15px;
+  --font-small: 13px;
+  --font-tiny: 12px;
+
+  --bg: #f5f6f8;
+  --surface: #ffffff;
+  --surface-hi: #eceef2;
+  --surface-sunk: #e3e6eb;
+  --line: #d9dde3;
+  --text: #16181d;
+  --dim: #666c78;
+  --ink: #ffffff; /* text on top of --accent or --text, wherever a control inverts */
+
+  /* One loud colour, and it only ever marks the thing you are meant to press. */
+  --accent: #2456d6;
+  --accent-hi: #1a44b0;
+  --accent-soft: #dfe7fb;
+
+  --good: #1a7f4b;
+  --warn: #b8730a;
+  --danger: #b3261e;
+
+  --radius: 12px;
+  --radius-lg: 18px;
+  --radius-pill: 999px;
+
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.05), 0 8px 24px rgb(0 0 0 / 0.1);
+
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --bg: #121417;
+  --surface: #1b1e23;
+  --surface-hi: #262a31;
+  --surface-sunk: #0d0f12;
+  --line: #31363e;
+  --text: #eef0f4;
+  --dim: #9aa1ad;
+  /* The accent is light here, so what sits on it is dark. */
+  --ink: #0b1430;
+
+  --accent: #7ea2ff;
+  --accent-hi: #9cb8ff;
+  --accent-soft: #1d2a4d;
+
+  --good: #5fd398;
+  --warn: #f0b64a;
+  --danger: #ff8a80;
+
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px rgb(0 0 0 / 0.5);
+
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--font-body);
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+dialog {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  max-width: none;
+  max-height: none;
+}
+
+dialog::backdrop {
+  background: rgb(0 0 0 / 0.5);
+  backdrop-filter: blur(2px);
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--text);
+  color: var(--ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Paper is white whatever the editor's theme is; the pages carry their own colour. */
+@media print {
+  html,
+  body,
+  #root {
+    background: #ffffff;
+    min-height: 0;
+  }
+}

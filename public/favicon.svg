@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
+  <!-- Handwriting lines on a blue tile. -->
+  <rect width="12" height="12" rx="2.6" fill="rgb(36 86 214)"/>
+  <line x1="2" y1="3.5" x2="10" y2="3.5" stroke="rgb(255 255 255)" stroke-width="0.7"/>
+  <line x1="2" y1="6" x2="10" y2="6" stroke="rgb(255 255 255)" stroke-width="0.6" stroke-dasharray="0.9 0.7"/>
+  <line x1="2" y1="8.5" x2="10" y2="8.5" stroke="rgb(255 120 100)" stroke-width="0.8"/>
+</svg>

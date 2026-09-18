@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Trace — handwriting worksheets you print</title>
+    <meta
+      name="description"
+      content="Type a word, print a worksheet, and a child traces it. A name, a spelling list or a sentence, in eleven layouts, three hands and three sizes. Paste a whole class list at once. Nothing leaves this browser."
+    />
+
+    <!-- Link previews. The image is the app's own cover shot, served from the directory
+         that hosts it; crawlers need an absolute URL and will not follow a relative one. -->
+    <meta property="og:title" content="Trace — handwriting worksheets you print" />
+    <meta
+      property="og:description"
+      content="Type a word, print a worksheet, and a child traces it. A name, a spelling list or a sentence, in eleven layouts. Paste a whole class list at once."
+    />
+    <meta property="og:site_name" content="Jake's Portfolio" />
+    <meta property="og:image" content="https://portfolio-4b9fe.web.app/images/trace-cover.jpg" />
+    <meta property="og:image:alt" content="Trace — handwriting worksheets you print" />
+    <meta property="og:url" content="https://portfolio-4b9fe.web.app/trace/" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Trace — handwriting worksheets you print" />
+    <meta
+      name="twitter:description"
+      content="Type a word, print a worksheet, and a child traces it. A name, a spelling list or a sentence, in eleven layouts. Paste a whole class list at once."
+    />
+    <meta name="twitter:image" content="https://portfolio-4b9fe.web.app/images/trace-cover.jpg" />
+    <meta name="twitter:image:alt" content="Trace — handwriting worksheets you print" />
+    <link rel="canonical" href="https://portfolio-4b9fe.web.app/trace/" />
+
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#f5f6f8" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/icon-180.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Trace" />
+
+    <!--
+      Resolves the editor's theme before the first paint: the stored choice, else the
+      device. React sets the same attribute on mount, which is a frame too late — on a
+      dark screen that frame is a white flash.
+    -->
+    <script>
+      try {
+        var stored = localStorage.getItem('trace.theme')
+        var dark = window.matchMedia('(prefers-color-scheme: dark)').matches
+        var theme = stored === 'light' || stored === 'dark' ? stored : dark ? 'dark' : 'light'
+        document.documentElement.dataset.theme = theme
+        if (theme === 'dark') {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#121417')
+        }
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
